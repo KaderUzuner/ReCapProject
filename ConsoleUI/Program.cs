@@ -8,8 +8,12 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+
+            UserManager userManager = new UserManager(new EfUserDal());
+            CustomerManager customerManager = new CustomerManager(new EdCustomerDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
             CarManager carManager = new CarManager(new InMemoryCarDal());
-            foreach (var car in carManager.GetAll()) ;
+            foreach (var car in carManager.GetAll());
             {
 
             }
