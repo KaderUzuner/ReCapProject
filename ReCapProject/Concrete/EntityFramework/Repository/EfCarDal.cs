@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
 using System.Text;
+
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -19,17 +21,14 @@ namespace DataAccess.Concrete.EntityFramework
 
                 var result =from c in context.Cars
                             join co in context.Colors
-                            on c.ColorId equals co.Id
+                            on c.ColorId equals co.ColorId
                             join br in context.Brands
-                            on c.BrandId equals br.Id
+                            on c.BrandId equals br.BrandId
                             select new CarDetailDto
                             {
-                                Id = c.Id,
-                                BrandId = br.Id,
-                                BrandName = br.Name,
-                                Name = c.Name,
-                                ColorId = co.Id,
-                                ColorName = co.Name,
+                                CarId = c.CarId,
+                                BrandId = br.BrandId,
+                                BrandName = br.BrandName,
                                 DailyPrice = c.DailyPrice,
                                 Description = c.Description,
                                 ModelYear = c.ModelYear

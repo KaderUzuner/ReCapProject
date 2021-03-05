@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Ultilities.Result;
@@ -18,13 +20,18 @@ namespace Business.Concrete
     public class CarManager : ICarService
     {
         ICarDal _carDal;
-        public CarManager(ICarDal carDal)
+        ICarImageService _carImageService;
+        public CarManager(ICarDal carDal, ICarImageService carImageService)
         {
             _carDal = carDal;
+            _carImageService = carImageService;
+
         }
 
 
         [ValidationAspect(typeof(CarValidator))]
+        [SecuredOperation("admin")]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
             //businnes code
@@ -37,6 +44,7 @@ namespace Business.Concrete
             
         }
 
+       
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
@@ -65,6 +73,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(x => x.ColorId == id), Messages.SuccessListed);
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car Car)
         {
             
