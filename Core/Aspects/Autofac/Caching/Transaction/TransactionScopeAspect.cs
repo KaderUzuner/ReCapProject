@@ -18,7 +18,7 @@ namespace Core.Aspects.Autofac.Caching.Transaction
                     invocation.Proceed();
                     transactionScope.Complete();
                 }
-                catch (Exception )
+                catch (Exception e)
                 {
                     transactionScope.Dispose();
                 }

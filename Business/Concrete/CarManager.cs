@@ -21,6 +21,8 @@ namespace Business.Concrete
     {
         ICarDal _carDal;
         ICarImageService _carImageService;
+
+
         public CarManager(ICarDal carDal, ICarImageService carImageService)
         {
             _carDal = carDal;
@@ -44,33 +46,51 @@ namespace Business.Concrete
             
         }
 
-       
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            _carImageService.DeleteByCarId(car.CarId);
             return new SuccessResult(Messages.SuccessDelete);
 
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.SuccessListed);
         }
 
+        [CacheAspect]
         public IDataResult<Car> GetById(int id)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == id));
         }
 
+        [CacheAspect]
+        public IDataResult<List<Car>> GetCarsByBrand(int brandId)
+        {
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == brandId));
+        }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id), Messages.SuccessListed);
         }
 
+        public IDataResult<List<Car>> GetCarsByColor(int colorId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(x => x.ColorId == id), Messages.SuccessListed);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarsDetails(CarDetailFilterDto filterDto)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetAllCarDetailsByFilter(filterDto));
         }
 
         [CacheRemoveAspect("ICarService.Get")]
@@ -80,9 +100,6 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessUpdate);
         }
 
-        IDataResult<List<CarDetailDto>> ICarService.GetCarDetails()
-        {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.SuccessListed);
-        }
+        
     }
 }

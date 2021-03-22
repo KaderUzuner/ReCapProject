@@ -96,10 +96,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("isdelivered")]
-        public IActionResult IsDelivered(Rental rental)
+        [HttpGet("getallrentaldetails")]
+        public IActionResult GetAllRentalDetails()
         {
-            var result = _rentalService.IsDelivered(rental);
+            var result = _rentalService.GetAllRentalsDetails();
             if (result.Success)
             {
                 return Ok(result);
@@ -107,5 +107,26 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("getlastbycarid")]
+        public IActionResult GetLastByCarId(int carId)
+        {
+            var result = _rentalService.GetAllByCarId(carId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("isrentable")]
+        public IActionResult IsRentable(Rental rental)
+        {
+            var result = _rentalService.IsRentable(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
     }
 }

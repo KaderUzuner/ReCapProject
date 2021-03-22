@@ -42,4 +42,4 @@ namespace Business.Constants
         //public static string ColorUpdated = "Renk güncellendi";
     }
 }
-}
+

@@ -7,8 +7,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework.Repository
 {
-    public class EfColorDal : EfEntityRepositoryBase<Color, NorthwindContext>, IColorDal
+    public class EfFakeCardDal : EfEntityRepositoryBase<FakeCard,NorthwindContext>, IFakeCardDal
     {
-        
     }
 }

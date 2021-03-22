@@ -14,24 +14,24 @@ namespace DataAccess.Concrete.InMemory
         List<Car> _cars;
         public InMemoryCarDal()
         {
-            _cars = new List<Car> { 
-              new Car(){CarId=1, BrandId=10, ColorId=1, ModelYear=2010, DailyPrice=50000, Description="bmw" },
-              new Car(){CarId=2, BrandId=20, ColorId=2, ModelYear=2017, DailyPrice=60000, Description="mercedes" },
-              new Car(){CarId=3, BrandId=30, ColorId=3, ModelYear=2019, DailyPrice=70000, Description="Lan Rover" }
+            _cars = new List<Car> {
+                new Car{CarId=1,BrandId=1,ColorId=1,ModelYear=2010,DailyPrice=15,Description="2010 model beyaz BMW araba"},
+                new Car{CarId=2,BrandId=1,ColorId=2,ModelYear=2020,DailyPrice=15,Description="2010 model siyah BMW araba"},
+                new Car{CarId=3,BrandId=2,ColorId=2,ModelYear=2014,DailyPrice=15,Description="2014 model beyaz Mercedes araba"},
+                new Car{CarId=4,BrandId=3,ColorId=3,ModelYear=2010,DailyPrice=15,Description="2010 model gri Renault araba"},
+                new Car{CarId=5,BrandId=4,ColorId=4,ModelYear=2018,DailyPrice=15,Description="2018 model siyah Wolkswagen araba"},
 
 
              };
         }
-        public void Add(Car car)
+         public void Add(Car car)
         {
             _cars.Add(car);
         }
 
         public void Delete(Car car)
         {
-            //Linq
-            
-           Car carToDelete=_cars.SingleOrDefault(c=>c.CarId==car.CarId);
+            Car carToDelete = _cars.SingleOrDefault(p => p.CarId == car.CarId);
             _cars.Remove(carToDelete);
         }
 
@@ -40,36 +40,45 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
-        public List<Car> GetAll()
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
         {
             return _cars;
         }
 
-        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        public List<CarDetailDto> GetAllCarDetails()
         {
             throw new NotImplementedException();
         }
 
-        public List<Car> GetAllByBrand(int brandId)
+        public List<CarDetailDto> GetAllCarDetails(Expression<Func<Car, bool>> filter = null)
         {
-           return _cars.Where(c=>c.BrandId==brandId).ToList();
+            throw new NotImplementedException();
         }
 
+        public List<CarDetailDto> GetAllCarDetailsByFilter(CarDetailFilterDto filter)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Car GetById(int id)
+        {
+            return _cars.SingleOrDefault(p => p.CarId == id);
+        }
 
         public List<CarDetailDto> GetCarDetails()
         {
             throw new NotImplementedException();
         }
-
         public void Update(Car car)
         {
-            Car carToUpdate = _cars.SingleOrDefault(c => c.CarId == car.CarId);
+            Car carToUpdate = _cars.SingleOrDefault(p => p.CarId == car.CarId);
             carToUpdate.BrandId = car.BrandId;
             carToUpdate.ColorId = car.ColorId;
-            carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.ModelYear = car.ModelYear;
-           
+            carToUpdate.DailyPrice = car.DailyPrice;
+            carToUpdate.Description = car.Description;
+
+
 
         }
 

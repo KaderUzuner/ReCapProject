@@ -8,6 +8,6 @@ namespace DataAccess.Abstract
 {
     public interface IColorDal : IEntityRepository<Color>
     {
-        bool IsExist(int id);
+        
     }
 }
