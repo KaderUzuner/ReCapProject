@@ -26,8 +26,8 @@ namespace DataAccess.Concrete.EntityFramework.Repository
                              on customer.UserId equals user.Id
                              select new RentalDetailDto
                              {
-                                 RentalId = rent.Id,
-                                 CarName = brand.Name + car.CarName,
+                                 RentalId = rent.RentalId,
+                                 CarName = brand.BrandName + car.CarName,
                                  CustomerFullName = user.FirstName + user.LastName,
                                  RentDate = rent.RentDate,
                                  RentStartDate = rent.RentStartDate,
