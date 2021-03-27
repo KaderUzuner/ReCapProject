@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Caching.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Ultilities.Business;
 using Core.Ultilities.FileHelper;
@@ -38,7 +41,7 @@ namespace Business.Concrete
             }
 
             carImage.ImagePath = CarImagesFileHelper.Add(file);
-            carImage.Date = DateTime.Now;
+            carImage.DateTime = DateTime.Now;
             _carImageDal.Add(carImage);
             return new SuccessResult();
         }
@@ -100,10 +103,10 @@ namespace Business.Concrete
                 return result;
             }
 
-            CarImage OldData = GetById(carImage.Id).Data;
-            carImage.ImagePath = CarImagesFileHelper.Update(file, OldData.ImagePath);
-            carImage.Date = DateTime.Now;
-            carImage.CarId = OldData.CarId;
+            CarImage oldCarImage = GetById(carImage.Id).Data;
+            carImage.ImagePath = CarImagesFileHelper.Update(file, oldCarImage.ImagePath);
+            carImage.DateTime = DateTime.Now;
+            carImage.CarId = oldCarImage.CarId;
             _carImageDal.Update(carImage);
             return new SuccessResult();
         }
@@ -126,7 +129,7 @@ namespace Business.Concrete
 
         private List<CarImage> CheckIfCarHaveNoImage(int carId)
         {
-            string path = Directory.GetCurrentDirectory() + @"\wwwroot\Images\default.png";
+            string path = @"\Images\default.png";
             var result = _carImageDal.GetAll(c => c.CarId == carId);
             if (!result.Any())
                 return new List<CarImage> { new CarImage { CarId = carId, ImagePath = path } };
@@ -141,4 +144,3 @@ namespace Business.Concrete
         }
     }
 }
-

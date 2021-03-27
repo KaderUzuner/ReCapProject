@@ -6,7 +6,7 @@ namespace Business.Constants
 {
     public static class Messages
     {
-
+        public static string[] ValidImageFileTypes = { ".JPG", ".JPEG", ".PNG", ".TIF", ".TIFF", ".GIF", ".BMP", ".ICO" };
         public static string SuccessAdd = "Ekleme başarılı";
         public static string ErrorAdd = "Ekleme başarısız";
         public static string SuccessDelete = "Silme başarılı";
@@ -23,11 +23,13 @@ namespace Business.Constants
         public static string RentalListed = "Kiralama listelendi";
         public static string CarUndelivered = "Araba henüz teslim edilmeemiş";
         public static string ImageLimitExpiredForCar = "Bir arabaya maximum 5 fotoğraf eklenebilir";
-        public static string InvalidImageExtension = "Geçersiz dosya uzantısı, fotoğraf için kabul edilen uzantılar";
+        public static string InvalidImageExtension = "Geçersiz dosya uzantısı, fotoğraf için kabul edilen uzantılar" + string.Join(",", ValidImageFileTypes);
         public static string CarImageMustBeExists = "Böyle bir resim bulunamadı";
-        public static string ValidImageFileTypes = "Geçerli görüntü dosyası türüdür.";
+       
         public static string CarHaveNoImage = "Arabaya ait bi resim yok";
         public static string AuthorizationDenied = "Yetkilendirme Reddedildi";
+        public static string CarImageLimitError = "Araba fotoğrafı ekleme limiti hatası.";
+        public static string CarImageAdded = "Arba resmi eklendi";
         //public static string CarAdded = "Araba eklendi";
         //public static string CarDeleted = "Araba silindi";
         //public static string CarUpdated = "Araba güncellendi";
